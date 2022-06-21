@@ -72,9 +72,9 @@ class StdKeterampilanModel extends Model
         }
     }
 
-    public function getDeskripsiByMapel($mapel)
+    public function getDeskripsiByMapel($mapel, $ta)
     {
-        $result = $this->getWhere(['kd_mapel' => $mapel])->getRow();
+        $result = $this->getWhere(['kd_mapel' => $mapel, 'kd_ta' => $ta])->getRow();
         return $result;
     }
 }

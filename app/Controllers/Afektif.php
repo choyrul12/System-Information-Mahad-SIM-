@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controllers;
+
 use App\Models\AfektifModel;
 use App\Models\UserModel;
 use App\Controllers\Administrator;
@@ -38,10 +40,6 @@ class Afektif extends BaseController
     public function insertDataAfektif()
     {
         if (!$this->validate([
-            'kelas' => [
-                'rules'  => 'required',
-                'errors' => ['required' => 'Kelas tidak boleh kosong.']
-            ],
             'kategori' => [
                 'rules'  => 'required',
                 'errors' => ['required' => 'Kategori tidak boleh kosong.']
@@ -54,20 +52,18 @@ class Afektif extends BaseController
                 'rules'  => 'required',
                 'errors' => ['required' => 'Deskripsi tidak boleh kosong.']
             ],
-            ])) 
-        {
+        ])) {
             $validation = \Config\Services::validation();
             $notif = $validation->getErrors();
             array_push($notif, "Empty");
             return json_encode($notif);
-        }else{
+        } else {
             $id = $this->request->getVar('key');
             $kelas = $this->request->getVar('kelas');
             $predikat = $this->request->getVar('predikat');
             $deskripsi = $this->request->getVar('deskripsi');
             $unit = session()->get('unit');
             $data = [
-                'kelas' => $kelas,
                 'predikat' => $predikat,
                 'deskripsi' => $deskripsi,
                 'unit' => $unit,
@@ -75,8 +71,8 @@ class Afektif extends BaseController
             if (empty($id)) {
                 $result = $this->AfektifModel->insertDataAfektif($data);
                 return json_encode(array($result));
-            }else{
-                $result = $this->AfektifModel->updateDataAfektif($id,$data);
+            } else {
+                $result = $this->AfektifModel->updateDataAfektif($id, $data);
                 return json_encode(array($result));
             }
         }
@@ -95,7 +91,7 @@ class Afektif extends BaseController
         $result = $this->AfektifModel->deleteById($id);
         return json_encode(array($result));
     }
-    
+
     public function getKkmById()
     {
         $id = $this->request->getVar('id');
@@ -110,13 +106,12 @@ class Afektif extends BaseController
                 'rules'  => 'required',
                 'errors' => ['required' => 'Standard tidak boleh kosong.']
             ],
-            ])) 
-        {
+        ])) {
             $validation = \Config\Services::validation();
             $notif = $validation->getErrors();
             array_push($notif, "Empty");
             return json_encode($notif);
-        }else{
+        } else {
             $id = $this->request->getVar('id_kkm');
             $standard = $this->request->getVar('standard');
             $unit = session()->get('unit');
